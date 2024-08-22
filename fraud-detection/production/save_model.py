@@ -11,7 +11,12 @@ from kfp.dsl import (
 
 @component(
     base_image='python:3.9',
-    packages_to_install=['boto3', 'model-registry=="0.2.3a1"']
+    packages_to_install=[
+        'pip==24.2',  
+        'setuptools>=65.0.0', 
+        'boto3',
+        'model-registry==0.2.3a1'
+    ]
 )
 
 def push_to_model_registry(
