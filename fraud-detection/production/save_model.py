@@ -15,6 +15,7 @@ from kfp.dsl import (
 )
 
 def push_to_model_registry(
+    version: str, 
     model: Input[Model]
 ):
     from os import environ
@@ -28,7 +29,7 @@ def push_to_model_registry(
     s3_secret_key = environ.get('AWS_SECRET_ACCESS_KEY')
     s3_bucket_name = environ.get('AWS_S3_BUCKET')
     author_name = environ.get('AUTHOR_NAME', 'default_author') 
-    version = ''
+    version = version
 
     def _initialize_s3_client(s3_endpoint_url, s3_access_key, s3_secret_key):
         print('Initializing S3 client')
