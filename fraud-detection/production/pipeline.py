@@ -30,7 +30,7 @@ data_connection_secret_name = 'aws-connection-models'
   name='fraud-detection-training-pipeline',
   description='Trains the fraud detection model.'
 )
-def fraud_training_pipeline(datastore: dict, hyperparameters: dict, version: str):
+def fraud_training_pipeline(datastore: dict, hyperparameters: dict, model_name: str, version: str):
     fetch_task = fetch_transactionsdb_data(datastore = datastore)
     data_validation_task = validate_transactiondb_data(dataset = fetch_task.outputs["dataset"])
     pre_processing_task = preprocess_transactiondb_data(in_data = fetch_task.outputs["dataset"])
@@ -53,7 +53,7 @@ def fraud_training_pipeline(datastore: dict, hyperparameters: dict, version: str
         onnx_model = convert_task.outputs["onnx_model"],
         test_data = pre_processing_task.outputs["test_data"]
     )
-    register_model_task = push_to_model_registry( version = version,
+    register_model_task = push_to_model_registry( model_name = model_name, version = version,
         model = convert_task.outputs["onnx_model"]
     )
     use_secret_as_env(

@@ -20,6 +20,7 @@ from kfp.dsl import (
 )
 
 def push_to_model_registry(
+    model_name: str,
     version: str, 
     model: Input[Model]
 ):
@@ -28,7 +29,7 @@ def push_to_model_registry(
     from boto3 import client
     from model_registry import ModelRegistry
 
-    model_object_prefix = environ.get('model_object_prefix', 'model')
+    model_object_prefix = model_name if model_name else "model"
     s3_endpoint_url = environ.get('AWS_S3_ENDPOINT')
     s3_access_key = environ.get('AWS_ACCESS_KEY_ID')
     s3_secret_key = environ.get('AWS_SECRET_ACCESS_KEY')
