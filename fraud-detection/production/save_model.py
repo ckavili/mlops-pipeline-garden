@@ -80,7 +80,7 @@ def push_to_model_registry(
     _do_upload(s3_client, model.path, "/models/fraud/1/" + model_object_name, s3_bucket_name)
 
     def _register_model(author_name, model_object_prefix, version, s3_endpoint_url, model_name):
-        registry = ModelRegistry(server_address="model-registry-service.kubeflow.svc.cluster.local", port=9090, author=author_name)
+        registry = ModelRegistry(server_address="http://model-registry-service.kubeflow.svc.cluster.local", port=8080, author=author_name, is_secure=False)
         registered_model_name = model_object_prefix
         version_name = version
         rm = registry.register_model(
